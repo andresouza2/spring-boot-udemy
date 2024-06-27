@@ -2,9 +2,6 @@ package com.projectspring.aula.domain.entity;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Table(name = "item_pedido")
 public class ItemPedido {
@@ -13,14 +10,15 @@ public class ItemPedido {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pedido_id")
     private Pedido pedido;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "produto_id")
     private Produto produto;
 
+    @Column
     private Integer quantity;
 
     public long getId() {
@@ -53,5 +51,15 @@ public class ItemPedido {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    @Override
+    public String toString() {
+        return "ItemPedido{" +
+                "id=" + id +
+                ", pedido=" + pedido +
+                ", produto=" + produto +
+                ", quantity=" + quantity +
+                '}';
     }
 }

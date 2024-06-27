@@ -18,10 +18,22 @@ public class AulaApplication {
 		return args -> {
 			clienteRepository.save(new Cliente("André"));
 			clienteRepository.save(new Cliente("Dayane"));
+			clienteRepository.save(new Cliente("Daniel"));
 			clienteRepository.save(new Cliente("Kallel"));
 
-			boolean existe = clienteRepository.existsByNome("André");
-			System.out.println("existe um cliente com esse nome: " + existe);
+//			boolean existe = clienteRepository.existsByNome("André");
+//			System.out.println("existe um cliente com esse nome: " + existe);
+
+			List<Cliente> result = clienteRepository.findByNomeLike("a");
+			result.forEach(System.out::println);
+
+			clienteRepository.deleteEntityByNome("Daniel");
+
+			System.out.println(clienteRepository.findByNomeLike("Daniel"));
+
+			System.out.println("----------- todos os clientes -----------------");
+			List<Cliente> result2 = clienteRepository.findAll();
+			result2.forEach(System.out::println);
 
 		};
 	}
