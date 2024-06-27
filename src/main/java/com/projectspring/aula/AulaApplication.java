@@ -20,28 +20,8 @@ public class AulaApplication {
 			clienteRepository.save(new Cliente("Dayane"));
 			clienteRepository.save(new Cliente("Kallel"));
 
-			List<Cliente> clientesList = clienteRepository.findAll();
-			clientesList.forEach(System.out::println);
-
-			clientesList.forEach(cliente -> {
-				cliente.setNome(cliente.getNome() + " atualizado");
-				clienteRepository.update(cliente);
-			});
-
-//			System.out.println("Buscando clientes");
-//				clienteRepository.findByName("Andr").forEach(System.out::println);
-
-//			System.out.println("deletando clientes");
-//			clienteRepository.findAll().forEach(clienteRepository::deletar);
-
-			clientesList = clienteRepository.findAll();
-			if(clientesList.isEmpty()) {
-				System.out.println("|---------------- nenhum cliente encontrado -------------|");
-			}else {
-				clientesList.forEach(System.out::println);
-			}
-
-			clientesList = clienteRepository.findAll();
+			boolean existe = clienteRepository.existsByNome("André");
+			System.out.println("existe um cliente com esse nome: " + existe);
 
 		};
 	}
