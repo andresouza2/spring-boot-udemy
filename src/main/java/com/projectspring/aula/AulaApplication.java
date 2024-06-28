@@ -1,39 +1,51 @@
 package com.projectspring.aula;
 
 import com.projectspring.aula.domain.entity.Cliente;
+import com.projectspring.aula.domain.entity.Pedido;
 import com.projectspring.aula.domain.repository.ClienteRepository;
+import com.projectspring.aula.domain.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @SpringBootApplication
 public class AulaApplication {
 
 	@Bean
-	public CommandLineRunner init(@Autowired ClienteRepository clienteRepository) {
+	public CommandLineRunner init(
+			@Autowired ClienteRepository clienteRepository,
+			@Autowired PedidoRepository pedidoRepository
+	) {
 		return args -> {
-			clienteRepository.save(new Cliente("André"));
-			clienteRepository.save(new Cliente("Dayane"));
-			clienteRepository.save(new Cliente("Daniel"));
-			clienteRepository.save(new Cliente("Kallel"));
+			System.out.println("Salvando clientes");
+			Cliente andre = new Cliente("André");
+			clienteRepository.save(andre);
 
-//			boolean existe = clienteRepository.existsByNome("André");
-//			System.out.println("existe um cliente com esse nome: " + existe);
+			Cliente kallel = new Cliente("Kallel Braga Gomes de Souza");
+			clienteRepository.save(kallel);
 
-			List<Cliente> result = clienteRepository.findByNomeLike("a");
-			result.forEach(System.out::println);
+			Pedido p = new Pedido();
+			p.setCliente(andre);
+			p.setDataPedido(LocalDate.now());
+			p.setTotal(BigDecimal.valueOf(100));
 
-			clienteRepository.deleteEntityByNome("Daniel");
+			pedidoRepository.save(p);
 
-			System.out.println(clienteRepository.findByNomeLike("Daniel"));
+//			Cliente cliente = clienteRepository.findClienteFetchPedidos(andre.getId());
+//			System.out.println(cliente);
+//			System.out.println(cliente.getPedidos());
 
-			System.out.println("----------- todos os clientes -----------------");
-			List<Cliente> result2 = clienteRepository.findAll();
-			result2.forEach(System.out::println);
+			if(!pedidoRepository.findByCliente(andre).isEmpty()) {
+				pedidoRepository.findByCliente(andre).forEach(System.out::println);
+			}else {
+				System.out.println("Pedidos nao encontrados");
+			}
 
 		};
 	}

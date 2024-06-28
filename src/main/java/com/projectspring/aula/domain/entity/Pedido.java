@@ -13,26 +13,26 @@ public class Pedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
     @Column(name = "data_pedido")
     private LocalDate dataPedido;
 
-    @Column(name = "total", length = 20, precision = 2)
+    @Column(name = "total", precision = 20, scale = 2)
     private BigDecimal total;
 
     @OneToMany(mappedBy = "pedido")
     private List<ItemPedido> itemPedido;
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -72,10 +72,8 @@ public class Pedido {
     public String toString() {
         return "Pedido{" +
                 "id=" + id +
-                ", cliente=" + cliente +
                 ", dataPedido=" + dataPedido +
                 ", total=" + total +
-                ", itemPedido=" + itemPedido +
                 '}';
     }
 }

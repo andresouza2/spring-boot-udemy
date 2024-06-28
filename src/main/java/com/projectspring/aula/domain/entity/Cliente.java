@@ -11,17 +11,17 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Long id;
+    private Integer id;
 
     @Column(name = "nome", length = 100)
     private String nome;
 
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
     private Set<Pedido> pedidos;
 
     public Cliente() {}
 
-    public Cliente(Long id, String nome) {
+    public Cliente(Integer id, String nome) {
         this.id = id;
         this.nome = nome;
     }
@@ -30,11 +30,11 @@ public class Cliente {
         this.nome = nome;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
