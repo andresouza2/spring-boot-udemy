@@ -1,32 +1,34 @@
-package com.projectspring.aula.domain.entity;
+package com.projectspring.aula.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 import java.util.Set;
 
 @Entity
 @Table(name = "cliente")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private Integer id;
 
-    @Column(name = "nome", length = 100)
+    @Column(name = "nome")
+    @NotBlank(message = "campo nao informado")
+    @Length(min = 3)
     private String nome;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
     private Set<Pedido> pedidos;
 
-    public Cliente() {}
-
-    public Cliente(Integer id, String nome) {
-        this.id = id;
-        this.nome = nome;
-    }
-
-    public Cliente(String nome) {
+    public Cliente(String nome){
         this.nome = nome;
     }
 

@@ -1,11 +1,11 @@
-package com.projectspring.aula.domain.entity;
+package com.projectspring.aula.domain.entities;
 
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "pedido")
@@ -26,7 +26,17 @@ public class Pedido {
     private BigDecimal total;
 
     @OneToMany(mappedBy = "pedido")
-    private List<ItemPedido> itemPedido;
+    private List<ItemPedido> itemPedido = new ArrayList<>();
+
+    public Pedido() {}
+
+    public Pedido(Integer id, Cliente cliente, LocalDate dataPedido, BigDecimal total, List<ItemPedido> itemPedido) {
+        this.id = id;
+        this.cliente = cliente;
+        this.dataPedido = dataPedido;
+        this.total = total;
+        this.itemPedido = itemPedido;
+    }
 
     public Integer getId() {
         return id;

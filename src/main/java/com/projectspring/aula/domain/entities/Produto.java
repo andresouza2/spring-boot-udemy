@@ -1,4 +1,4 @@
-package com.projectspring.aula.domain.entity;
+package com.projectspring.aula.domain.entities;
 
 import jakarta.persistence.*;
 

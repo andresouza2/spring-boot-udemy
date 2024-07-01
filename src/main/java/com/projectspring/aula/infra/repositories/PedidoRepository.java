@@ -1,7 +1,7 @@
-package com.projectspring.aula.domain.repository;
+package com.projectspring.aula.infra.repositories;
 
-import com.projectspring.aula.domain.entity.Cliente;
-import com.projectspring.aula.domain.entity.Pedido;
+import com.projectspring.aula.domain.entities.Cliente;
+import com.projectspring.aula.domain.entities.Pedido;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
-package com.projectspring.aula.domain.repository;
+package com.projectspring.aula.infra.repositories;
 
-import com.projectspring.aula.domain.entity.ItemPedido;
+import com.projectspring.aula.domain.entities.ItemPedido;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ItemPedidoRepository extends JpaRepository<ItemPedido, Integer> {
