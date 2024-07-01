@@ -1,7 +1,8 @@
 package com.projectspring.aula.application.exceptions;
 
-import com.projectspring.aula.interfaceAdapters.dto.ErrorMessageDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,16 @@ public class GlobalExceptionHandler {
             dto.add(error);
         });
 
-        return new ResponseEntity<>(dto, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<List<ErrorMessageDto>>(dto, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(ClienteExistsException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ClienteExceptionDTO> handleValidationExceptionsRuntimeException(ClienteExistsException e) {
+
+        String message = messageSource.getMessage((MessageSourceResolvable) e, LocaleContextHolder.getLocale());
+        ClienteExceptionDTO error = new ClienteExceptionDTO(message);
+
+        return new ResponseEntity<ClienteExceptionDTO>(error, HttpStatus.BAD_REQUEST);
+    }
 }

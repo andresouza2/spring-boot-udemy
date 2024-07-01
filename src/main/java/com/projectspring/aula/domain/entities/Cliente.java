@@ -11,8 +11,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "cliente")
-@NoArgsConstructor
-@AllArgsConstructor
 public class Cliente {
 
     @Id
@@ -21,15 +19,22 @@ public class Cliente {
 
     @Column(name = "nome")
     @NotBlank(message = "campo nao informado")
-    @Length(min = 3)
     private String nome;
 
     @JsonIgnore
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
     private Set<Pedido> pedidos;
 
+    public Cliente() {}
+
     public Cliente(String nome){
         this.nome = nome;
+    }
+
+    public Cliente(Integer id, String nome, Set<Pedido> pedidos) {
+        this.id = id;
+        this.nome = nome;
+        this.pedidos = pedidos;
     }
 
     public Integer getId() {

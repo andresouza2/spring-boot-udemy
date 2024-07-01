@@ -27,16 +27,15 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @PostMapping("/create")
-    public ResponseEntity<Object> save(@Valid @RequestBody ClienteRequestDto clienteRequestDto) {
+    public ResponseEntity<Object> save(@Valid @RequestBody ClienteRequestDto dto) {
         CadastrarUseCase cadastrarUseCase = new CadastrarUseCase(clienteService);
         try {
-            var result = cadastrarUseCase.execute(new Cliente(clienteRequestDto.nome()));
-            return ResponseEntity.status(HttpStatus.OK).body(result);
+            var result = cadastrarUseCase.execute(new Cliente(dto.nome()));
+            return ResponseEntity.ok().body(result);
         }catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-
 
     }
 
